@@ -1,0 +1,98 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f8fa;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.container {
+  margin-top: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 15px;
+  display: block;
+  color: #333;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357ab8;
+}
+
+#email-output {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #fefefe;
+  border-left: 5px solid #4a90e2;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.copy-btn {
+  background-color: #2ecc71;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  background-color: #27ae60;
+}
+
+.note {
+  color: #999;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}

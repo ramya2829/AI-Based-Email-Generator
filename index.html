@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Email Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📧 AI Email Generator</h1>
+
+    <label for="type">Email Type:</label>
+    <select id="type">
+      <option value="job application">Job Application</option>
+      <option value="apology">Apology</option>
+      <option value="business inquiry">Business Inquiry</option>
+      <option value="Happy info">Happy info</option>
+    </select>
+
+    <label for="recipient">Recipient Role:</label>
+    <input type="text" id="recipient" placeholder="e.g., HR Manager">
+
+    <label for="purpose">Purpose or Details:</label>
+    <textarea id="purpose" placeholder="e.g., applying for a software engineer job" rows="3"></textarea>
+
+    <label for="tone">Tone:</label>
+    <select id="tone">
+      <option value="formal">Formal</option>
+      <option value="polite">Polite</option>
+      <option value="friendly">Friendly</option>
+      <option value="professional">Professional</option>
+      <option value="excitement">Excitement</option>
+    </select>
+
+    <button onclick="generateEmail()">🚀 Generate Email</button>
+
+    <div id="email-output" style="display:none;"></div>
+
+    <div class="actions" id="copy-area" style="display:none;">
+      <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Email</button>
+      <span class="note" id="copy-status"></span>
+    </div>
+  </div>
+
+  <script>
+    async function generateEmail() {
+      const type = document.getElementById("type").value;
+      const recipient = document.getElementById("recipient").value.trim();
+      const purpose = document.getElementById("purpose").value.trim();
+      const tone = document.getElementById("tone").value;
+
+      const outputDiv = document.getElementById("email-output");
+      const copyArea = document.getElementById("copy-area");
+      const copyStatus = document.getElementById("copy-status");
+
+      outputDiv.style.display = "block";
+      copyArea.style.display = "none";
+      outputDiv.innerText = "⏳ Generating email...";
+
+      if (!recipient || !purpose) {
+        outputDiv.innerText = "⚠️ Please fill in all the fields.";
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:5000/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type, recipient, purpose, tone })
+        });
+
+        const data = await response.json();
+        if (data.email) {
+          outputDiv.innerText = data.email;
+          copyArea.style.display = "flex";
+          copyStatus.innerText = "";
+        } else {
+          outputDiv.innerText = `❌ Error: ${data.error || "No response"}`;
+        }
+      } catch (err) {
+        outputDiv.innerText = `🚫 Request failed: ${err.message}`;
+      }
+    }
+
+    function copyToClipboard() {
+      const emailText = document.getElementById("email-output").innerText;
+      navigator.clipboard.writeText(emailText).then(() => {
+        document.getElementById("copy-status").innerText = "✅ Copied Successfully!";
+      });
+    }
+  </script>
+</body>
+</html>
+
+
+
