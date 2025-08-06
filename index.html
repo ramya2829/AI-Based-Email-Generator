@@ -3,40 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <title>AI Email Generator</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #034ce9, #ed040c);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      animation: fadeIn 1s ease;
+    }
+
+    .container {
+      margin-top: 50px;
+      background: rgba(20, 180, 228, 1.0);
+      backdrop-filter: blur(20px);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(78, 218, 7, 0.1);
+      max-width: 720px;
+      width: 90%;
+      animation: zoomIn 0.7s ease;
+      transition: all 0.3s ease;
+    }
+
+    h1 {
+      text-align: center;
+      color: #030d1d;
+      font-size: 2.4rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd6e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f9fbfd;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.5s ease, transform 0.5s ease;
+    }
+
+    button:hover {
+      background: #357ab8;
+      transform: translateY(-2px);
+      animation: glowPulse 1.5s infinite ease-in-out;
+    }
+
+    #email-output {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fefefe;
+      border-left: 5px solid #4a90e2;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      animation: popIn 0.5s ease-in-out;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .copy-btn {
+      background-color: #6bcc2e;
+      border: none;
+      padding: 10px 18px;
+      color: white;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background-color: #27ae60;
+      transform: scale(1.05);
+    }
+
+    .note {
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .loading {
+      font-style: italic;
+      color: #020204;
+      animation: pulse 1s infinite ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      80% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 10px rgba(8, 24, 104, 0.4); }
+      50% { box-shadow: 0 0 12px rgba(74, 144, 226, 0.6); }
+      100% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.4); }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>📧 AI Email Generator</h1>
+    <h1> AI Email Generator</h1>
 
-    <label for="type">Email Type:</label>
-    <select id="type">
-      <option value="job application">Job Application</option>
-      <option value="apology">Apology</option>
-      <option value="business inquiry">Business Inquiry</option>
-      <option value="Happy info">Happy info</option>
-    </select>
+    <div class="form-group" style="animation-delay: 0.5s;">
+      <label for="type">Email Type:</label>
+      <select id="type">
+        <option value="job application">Job Application</option>
+        <option value="apology">Apology</option>
+        <option value="business inquiry">Business Inquiry</option>
+        <option value="Happy info">Happy Info</option>
+      </select>
+    </div>
 
-    <label for="recipient">Recipient Role:</label>
-    <input type="text" id="recipient" placeholder="e.g., HR Manager">
+    <div class="form-group" style="animation-delay: 0.4s;">
+      <label for="recipient">Recipient Role:</label>
+      <input type="text" id="recipient" placeholder="e.g., HR Manager">
+    </div>
 
-    <label for="purpose">Purpose or Details:</label>
-    <textarea id="purpose" placeholder="e.g., applying for a software engineer job" rows="3"></textarea>
+    <div class="form-group" style="animation-delay: 0.6s;">
+      <label for="purpose">Purpose or Details:</label>
+      <textarea id="purpose" placeholder="e.g., applying for a software engineer job" rows="3"></textarea>
+    </div>
 
-    <label for="tone">Tone:</label>
-    <select id="tone">
-      <option value="formal">Formal</option>
-      <option value="polite">Polite</option>
-      <option value="friendly">Friendly</option>
-      <option value="professional">Professional</option>
-      <option value="excitement">Excitement</option>
-    </select>
+    <div class="form-group" style="animation-delay: 0.8s;">
+      <label for="tone">Tone:</label>
+      <select id="tone">
+        <option value="formal">Formal</option>
+        <option value="polite">Polite</option>
+        <option value="friendly">Friendly</option>
+        <option value="professional">Professional</option>
+        <option value="excitement">Excitement</option>
+      </select>
+    </div>
 
-    <button onclick="generateEmail()">🚀 Generate Email</button>
+    <button onclick="generateEmail()">Generate Email</button>
 
-    <div id="email-output" style="display:none;"></div>
+    <div id="email-output" style="display: none;"></div>
 
-    <div class="actions" id="copy-area" style="display:none;">
+    <div class="actions" id="copy-area" style="display: none;">
       <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Email</button>
       <span class="note" id="copy-status"></span>
     </div>
@@ -55,10 +232,10 @@
 
       outputDiv.style.display = "block";
       copyArea.style.display = "none";
-      outputDiv.innerText = "⏳ Generating email...";
+      outputDiv.innerHTML = "<div class='loading'>⏳ Generating email...</div>";
 
       if (!recipient || !purpose) {
-        outputDiv.innerText = "⚠️ Please fill in all the fields.";
+        outputDiv.innerHTML = "⚠️ Please fill in all the fields.";
         return;
       }
 
@@ -91,6 +268,4 @@
   </script>
 </body>
 </html>
-
-
 
